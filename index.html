@@ -38,31 +38,33 @@
             }
 
             function movePlayer(command){
-                const player = state.players[command.playerId]
-
                 console.log(`Trying to move ${command.playerId} with ${command.key}`)
 
                 const acceptedMoves = {
-                    ArrowUp : function (){
+                    ArrowUp : function (player){
                         player.y = Math.max(player.y - 1, 0)
                         console.log(`Moving ${command.playerId} with ${command.key}`)
                     },
-                    ArrowDown : function (){
+                    ArrowDown : function (player){
                         player.y = Math.min(player.y + 1, screen.height-1)
                         console.log(`Moving ${command.playerId} with ${command.key}`)
                     },
-                    ArrowLeft : function (){
+                    ArrowLeft : function (player){
                         player.x = Math.max(player.x - 1, 0)
                         console.log(`Moving ${command.playerId} with ${command.key}`)
                     },
-                    ArrowRight : function (){
+                    ArrowRight : function (player){
                         player.x = Math.min(player.x + 1, screen.width-1)
                         console.log(`Moving ${command.playerId} with ${command.key}`)
                     }
                 }
+                
+                const player = state.players[command.playerId]
+                const key = command.key
+                const moveFunction = acceptedMoves[key]
 
-                if(acceptedMoves[command.key]){
-                    acceptedMoves[command.key]()
+                if(moveFunction){
+                    moveFunction(player)
                 }
             }
 
@@ -97,8 +99,6 @@
             document.addEventListener('keydown', handleKeyDown)
 
             function handleKeyDown(event){
-                console.log(`Key ${event.key} pressed.`)
-                
                 const key = event.key
                 
                 const command = {playerId: currentPlayerId, key}
