@@ -28,7 +28,7 @@
         const currentPlayerId = 'player1'
 
         function createGame(){
-            state = {
+            const state = {
                 players : {
                     'player1': {x: 0, y:0}
                 },
@@ -38,8 +38,8 @@
             }
 
             function movePlayer(command){
-                console.log(state.players[command.playerId])
                 const player = state.players[command.playerId]
+
                 console.log(`Trying to move ${command.playerId} with ${command.key}`)
 
                 const acceptedMoves = {
@@ -76,7 +76,7 @@
 
         const keyboardListener = createKeyboardListener()
 
-        //keyboardListener.subscribe(game.movePlayer)
+        keyboardListener.subscribe(game.movePlayer)
 
         function createKeyboardListener(){
             state = {
