@@ -9,7 +9,7 @@ const sockets = socketio(server);
 
 app.use(express.static("public"));
 
-const game = createGame();
+const game = createGame({width: 20, height: 10});
 game.start();
 
 game.subscribe((command) => {

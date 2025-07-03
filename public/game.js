@@ -1,11 +1,8 @@
-function createGame() {
+function createGame(screen) {
     const state = {
         players: {},
         fruits: {},
-        screen: {
-            width: 10,
-            height: 10,
-        },
+        screen: screen ? screen : {},
     };
 
     const observers = [];

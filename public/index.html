@@ -43,6 +43,15 @@
 
                 game.setState(state);
 
+                const screen = document.getElementById("screen");
+                const width = game.state.screen.width;
+                const height = game.state.screen.height;
+
+                screen.style.width = `${width * 40}px`;
+                screen.style.height = `${height * 40}px`;
+                screen.width = width;
+                screen.height = height;
+
                 keyboardListener.registerPlayerId(playerId);
                 keyboardListener.subscribe(game.movePlayer);
                 keyboardListener.subscribe((command) => {
