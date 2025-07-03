@@ -45,6 +45,9 @@
 
                 keyboardListener.registerPlayerId(playerId);
                 keyboardListener.subscribe(game.movePlayer);
+                keyboardListener.subscribe((command) => {
+                    socket.emit("move-player", command);
+                });
             });
 
             socket.on("add-player", (command) => {
@@ -57,7 +60,7 @@
                 game.removePlayer(command);
             });
 
-            /* socket.on("add-fruit", (command) => {
+            socket.on("add-fruit", (command) => {
                 console.log(`Receiving ${command.type} -> ${command.fruitId}`);
                 game.addFruit(command);
             });
@@ -65,11 +68,16 @@
             socket.on("remove-fruit", (command) => {
                 console.log(`Receiving ${command.type} -> ${command.fruitId}`);
                 game.removeFruit(command);
-            }); */
+            });
 
             socket.on("move-player", (command) => {
                 console.log(`Receiving ${command.type} -> ${command.playerId}`);
-                game.movePlayer(command);
+
+                const playerId = socket.id;
+
+                if (command.playerId !== playerId) {
+                    game.movePlayer(command);
+                }
             });
         </script>
     </body>

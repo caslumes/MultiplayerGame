@@ -21,10 +21,11 @@ function createKeyboardListener(document) {
     document.addEventListener("keydown", handleKeyDown);
 
     function handleKeyDown(event) {
+        const type = 'move-player'
         const playerId = state.playerId;
         const key = event.key;
 
-        const command = { playerId, key };
+        const command = { type, playerId, key };
 
         notifyAll(command);
     }

@@ -49,15 +49,15 @@ function createGame() {
     }
 
     function addFruit(command) {
-        const fruitId = command.fruitId;
-        const fruitX =
-            "fruitX" in command
-                ? command.fruitX
-                : Math.floor(Math.random() * state.screen.width);
-        const fruitY =
-            "fruitY" in command
-                ? command.fruitY
-                : Math.floor(Math.random() * state.screen.height);
+        const fruitId = command
+            ? command.fruitId
+            : Math.floor(Math.random() * 10000000);
+        const fruitX = command
+            ? command.fruitX
+            : Math.floor(Math.random() * state.screen.width);
+        const fruitY = command
+            ? command.fruitY
+            : Math.floor(Math.random() * state.screen.height);
 
         state.fruits[fruitId] = { x: fruitX, y: fruitY };
 
@@ -70,6 +70,17 @@ function createGame() {
         delete state.fruits[fruitId];
 
         notifyAll({ type: "remove-fruit", fruitId });
+    }
+
+    function start() {
+        const frequency = 2000;
+
+        setInterval(() => {
+            const fruitsQnt = Object.keys(state.fruits).length;
+            if (fruitsQnt < 5) {
+                addFruit();
+            }
+        }, frequency);
     }
 
     function movePlayer(command) {
@@ -113,6 +124,7 @@ function createGame() {
     }
 
     return {
+        start,
         state,
         setState,
         subscribe,
